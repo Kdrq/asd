@@ -1,0 +1,300 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "from numpy import linalg as LA"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(10, 10)\n"
+     ]
+    }
+   ],
+   "source": [
+    "ExpertMark = np.array([\n",
+    "    [9,8,9,6,9,8,6,6,7,9],\n",
+    "    [7,9,8,8,8,8,10,4,9,3],\n",
+    "    [9,10,10,6,7,7,7,9,6,9],\n",
+    "    [4,8,8,10,6,7,10,10,7,8],\n",
+    "    [10,9,8,8,9,8,6,10,9,9],\n",
+    "    [3,10,8,10,3,8,10,8,10,9],\n",
+    "    [10,9,9,7,9,5,8,8,9,10],\n",
+    "    [8,8,10,8,7,8,7,8,5,5],\n",
+    "    [8,6,8,9,9,6,10,10,9,9],\n",
+    "    [8,8,6,9,7,7,10,6,6,10]])\n",
+    "\n",
+    "print(ExpertMark.shape)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Середні оцінки експертів: [7.7 7.4 8.  7.8 8.6 7.9 8.4 7.4 8.4 7.7]\n",
+      "Дисперсії цих оцінок: [0.17888889 0.49333333 0.24444444 0.37333333 0.13777778 0.74333333\n",
+      " 0.22666667 0.22666667 0.20444444 0.24555556]\n",
+      "V: [18.20535038 10.53565375 16.1807967  12.76574658 23.16908396  9.16294938\n",
+      " 17.64352906 15.54310893 18.57768648 15.53874154]\n"
+     ]
+    }
+   ],
+   "source": [
+    "MeanMark = np.zeros(10)\n",
+    "Dispersion = np.zeros(10)\n",
+    "V = np.zeros(10)\n",
+    "\n",
+    "for i in range(10):\n",
+    "    for j in range(10):\n",
+    "        MeanMark[i] += ExpertMark[i][j]/10\n",
+    "    for k in range(10):\n",
+    "        Dispersion[i] += ((MeanMark[i] - ExpertMark[i][k])**2)/90\n",
+    "    V[i] = MeanMark[i]/Dispersion[i]**(0.5)\n",
+    "\n",
+    "print(\"Середні оцінки експертів: \" + str(MeanMark))\n",
+    "print(\"Дисперсії цих оцінок: \" + str(Dispersion))\n",
+    "print(\"V: \" + str(V))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(10, 10)\n"
+     ]
+    }
+   ],
+   "source": [
+    "ExpertChar = np.array([\n",
+    "    [1,0,1,0,47,3,6,1,0,54],\n",
+    "    [0,0,1,0,16,0,8,1,0,58],\n",
+    "    [1,1,1,0,120,24,12,1,1,49],\n",
+    "    [0,0,0,1,92,12,8,1,1,57],\n",
+    "    [0,0,0,1,72,8,4,1,1,62],\n",
+    "    [1,1,1,0,78,8,6,0,0,70],\n",
+    "    [1,1,1,0,82,9,14,1,1,68],\n",
+    "    [1,1,0,0,76,6,8,0,0,71],\n",
+    "    [1,0,1,0,40,8,6,1,1,46],\n",
+    "    [0,0,0,1,98,8,4,1,1,58]])\n",
+    "\n",
+    "print(ExpertChar.shape)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "U: [[  2.36433122   0.           2.36433122   0.         111.12356728\n",
+      "    7.09299366  14.18598731   2.36433122   0.         127.67388581]\n",
+      " [  0.           0.           1.42373699   0.          22.7797919\n",
+      "    0.          11.38989595   1.42373699   0.          82.57674563]\n",
+      " [  2.02259959   2.02259959   2.02259959   0.         242.71195049\n",
+      "   48.5423901   24.27119505   2.02259959   2.02259959  99.10737978]\n",
+      " [  0.           0.           0.           1.63663418 150.57034426\n",
+      "   19.63961012  13.09307341   1.63663418   1.63663418  93.28814808]\n",
+      " [  0.           0.           0.           2.69407953 193.97372619\n",
+      "   21.55263624  10.77631812   2.69407953   2.69407953 167.03293088]\n",
+      " [  1.15986701   1.15986701   1.15986701   0.          90.46962674\n",
+      "    9.27893608   6.95920206   0.           0.          81.19069067]\n",
+      " [  2.10042013   2.10042013   2.10042013   0.         172.23445034\n",
+      "   18.90378113  29.40588176   2.10042013   2.10042013 142.82856857]\n",
+      " [  2.10042013   2.10042013   0.           0.         159.63192958\n",
+      "   12.60252076  16.80336101   0.           0.         149.12982895]\n",
+      " [  2.21162934   0.           2.21162934   0.          88.46517369\n",
+      "   17.69303474  13.26977605   2.21162934   2.21162934 101.73494975]\n",
+      " [  0.           0.           0.           2.01801838 197.76580143\n",
+      "   16.14414706   8.07207353   2.01801838   2.01801838 117.04506616]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "U = np.zeros((10,10))\n",
+    "for i in range(10):\n",
+    "    for j in range(10):\n",
+    "        U[i][j] = ExpertChar[i][j]/Dispersion[i]**(0.5)\n",
+    "print(\"U: \" + str(U))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.linear_model import LinearRegression"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None, normalize=False)"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "lm = LinearRegression(fit_intercept=True)\n",
+    "lm.fit(U, V)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "A: [ 0.7199876  -1.11325867 -0.1280317  -0.94144124 -0.01730213  0.15923998\n",
+      " -0.14228795  1.20127971  0.78940037  0.12760928]\n",
+      "A_0: 0.48485538687307894\n"
+     ]
+    }
+   ],
+   "source": [
+    "A = lm.coef_\n",
+    "A_0 = lm.intercept_\n",
+    "print(\"A: \" + str(A))\n",
+    "print(\"A_0: \" + str(A_0))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Коректні оцінки кожного експерту: [7.7 7.4 8.  7.8 8.6 7.9 8.4 7.4 8.4 7.7]\n",
+      "Сума: 79.3\n"
+     ]
+    }
+   ],
+   "source": [
+    "CorrectExpertMark = np.zeros(10)\n",
+    "CorrectExpertMark = ExpertChar.dot(A)\n",
+    "for i in range(10):\n",
+    "    CorrectExpertMark[i] += A_0*Dispersion[i]**(0.5)\n",
+    "print(\"Коректні оцінки кожного експерту: \" + str(CorrectExpertMark))\n",
+    "S = CorrectExpertMark.sum()\n",
+    "print(\"Сума: \" + str(S))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(10, 3)\n"
+     ]
+    }
+   ],
+   "source": [
+    "ProjMark = np.array([[8,9,8],\n",
+    "                     [2,8,7],\n",
+    "                     [3,10,9],\n",
+    "                     [4,6,2],\n",
+    "                     [5,6,3],\n",
+    "                     [5,5,8],\n",
+    "                     [9,8,7],\n",
+    "                     [7,8,6],\n",
+    "                     [10,6,7],\n",
+    "                     [8,10,7]])\n",
+    "print(ProjMark.shape)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Коректні оцінки кожного проекту: [6.14249685 7.56872636 6.37957125]\n"
+     ]
+    }
+   ],
+   "source": [
+    "CorrectProjMark = np.zeros(3)\n",
+    "\n",
+    "for i in range(3):\n",
+    "    for j in range(10):\n",
+    "        CorrectProjMark[i] += ProjMark[j][i]*CorrectExpertMark[j]/S\n",
+    "        \n",
+    "print(\"Коректні оцінки кожного проекту: \" + str(CorrectProjMark))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.4"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
